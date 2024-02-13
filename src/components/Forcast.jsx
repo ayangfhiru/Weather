@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-const Week = (props) => {
+const Forcast = (props) => {
     const { temp, forcast } = props;
     const [date, setDate] = useState({});
 
     const dateToEpoch = () => {
         const dateStart = new Date();
         const epochStart = (dateStart.getTime() / 1000).toFixed();
-        const epochEnd = dateStart.setHours(dateStart.getHours() + 19);
+        const epochEnd = dateStart.setHours(dateStart.getHours() + 17);
         const start = parseInt(epochStart);
         const end = Math.floor(epochEnd / 1000);
         setDate({ start, end });
@@ -22,7 +22,7 @@ const Week = (props) => {
         return `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${formatDate}`;
     }
 
-    const convertDay = (epoch) =>{
+    const convertDay = (epoch) => {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         const date = new Date(epoch * 1000);
         const day = date.getDay();
@@ -44,22 +44,24 @@ const Week = (props) => {
     }, [])
 
     return (
-        <div className="flex gap-2">
-            {
-                forcast.list.filter((data) => data.dt >= date.start && data.dt <= date.end)
-                    .map((data, i) => {
-                        return (
-                            <div key={i} className="bg-gray-300 w-40 h-48 box-border p-4 flex flex-col items-center justify-between rounded-lg">
-                                <p className="font-semibold">{convertDay(data.dt)}</p>
-                                <p className="text-sm">{convertTime(data.dt)}</p>
-                                <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Sunrise" className="backdrop-blur-sm mx-auto w-4/5 bg-gray-500/50 rounded-3xl" />
-                                <p className="text-sm">{setTemperature(data.main.temp)}{temp ? <span>&#8457;</span> : <span>&#8451;</span>}</p>
-                            </div>
-                        )
-                    })
-            }
-        </div>
+        <>
+            <div className="flex flex-wrap gap-2">
+                {
+                    forcast.list.filter((data) => data.dt >= date.start && data.dt <= date.end)
+                        .map((data, i) => {
+                            return (
+                                <div key={i} className="bg-gray-300 w-[127px] h-[127px] box-border py-2 flex flex-col items-center justify-between rounded-lg md:w-40 md:h-40">
+                                    <p className="font-semibold">{convertDay(data.dt)}</p>
+                                    <p className="text-sm">{convertTime(data.dt)}</p>
+                                    <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Sunrise" className="backdrop-blur-sm mx-auto w-12 bg-gray-500/50 rounded-3xl md:w-20" />
+                                    <p className="text-sm">{setTemperature(data.main.temp)}{temp ? <span>&#8457;</span> : <span>&#8451;</span>}</p>
+                                </div>
+                            )
+                        })
+                }
+            </div>
+        </>
     )
 }
 
-export default Week
+export default Forcast

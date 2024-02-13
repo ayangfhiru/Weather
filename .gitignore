@@ -15,6 +15,7 @@ dist-ssr
 psd
 thumb
 sketch
+.env
 
 # Editor directories and files
 .vscode/*
