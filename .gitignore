@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 bower_components
 dist
-dist-ssr
+dist-ssry
 *.local
 psd
 thumb
