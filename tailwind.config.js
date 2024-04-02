@@ -14,10 +14,10 @@ export default {
         "83": "20.75rem"
       },
       backgroundImage: {
-        'city': "url('/city.svg')"
+        'city': "url('./src/assets/city.svg')"
       }
     },
   },
-  plugins: [],
+  plugins: []
 }
 

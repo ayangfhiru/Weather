@@ -1,29 +1,13 @@
+import { convertTime } from "../utils/convertTime";
+import { tempScale } from "../utils/tempScale";
+
 const Sidebar = (props) => {
-    const { getMyLocation, temp, weather } = props;
-
-    const convertTime = (epoch) => {
-        const date = new Date(epoch * 1000);
-        let hours = date.getHours();
-        const minutes = date.getMinutes();
-        const formatDate = hours >= 12 ? 'PM' : 'AM'
-        hours = (hours % 12) || 12
-        return `${hours}:${minutes} ${formatDate}`;
-    }
-
-    const setTemperature = (data) => {
-        let temperature;
-        if (temp == true) {
-            temperature = ((data - 273.15) * 9 / 5 + 32).toFixed(2)
-        } else {
-            temperature = (data - 273.15).toFixed(2)
-        }
-        return temperature;
-    }
+    const { getLocation, temp, weather } = props;
 
     return (
         <div className="relative w-full h-auto bg-gray-500 py-3 px-5 box-border md:w-1/5 md:h-screen">
             <span className="inline-block w-full">
-                <button onClick={getMyLocation} className="float-end bg-gray-100 right-3 top-3 rounded-full flex justify-center p-1">
+                <button onClick={getLocation} className="float-end bg-gray-100 right-3 top-3 rounded-full flex justify-center p-1">
                     <span className="material-symbols-outlined">my_location</span>
                 </button>
             </span>
@@ -34,7 +18,7 @@ const Sidebar = (props) => {
                 </div>
                 <div className="flex flex-col">
                     <div className="mt-0 items-start w-full px-3 md:mt-8">
-                        <h3 className="text-5xl font-light text-white">{setTemperature(weather.main.temp)}{temp ? <span>&#8457;</span> : <span>&#8451;</span>}</h3>
+                        <h3 className="text-5xl md:text-4xl font-light text-white">{tempScale(temp, weather.main.temp)}{temp ? <span>&#8457;</span> : <span>&#8451;</span>}</h3>
                         <p className="mt-5 text-2xl text-white">{convertTime(weather.dt)}</p>
                     </div>
                 </div>
